@@ -1,6 +1,5 @@
 // import init, {Input, main, Session} from '@webonnx/wonnx-wasm';
 import init, {Input, main, Session} from './node_modules/@webonnx/wonnx-wasm/wonnx.js';
-const fs = require('fs');
 
 async function fetchBytes(url) {
   const reply = await fetch(url);
@@ -109,6 +108,8 @@ async function run(imageUrl) {
         document.getElementById('log').innerText = resultLabels;
         document.getElementById('perf').innerText =
             `Inference time: ${duration.toFixed(2)}ms`;
+        console.log(`Inference Compute time: ${duration.toFixed(2)}ms`);
+        
       } catch (e) {
         console.error(e, e.toString());
       }
@@ -121,28 +122,22 @@ async function run(imageUrl) {
 }
 // const imageUrl = './data/images/input1.jpg';
 // Grab all the images in the directory and put their urls in an array
-let imageUrls = [];
-const directoryPath = './data/images';
+let imageUrls = [
+  './data/images/input1.jpg',
+  './data/images/input2.jpg',
+  './data/images/input3.jpg',
+  './data/images/input4.jpg',
+  './data/images/input5.jpg'
+];
 
-fs.readdir(directoryPath, (err, files) => {
-  if (err) {
-    console.error('Error reading directory:', err);
-    return;
-  }
+const totalTimerStart = performance.now();
 
-  files.forEach(file => {
-    if (file.endsWith('.jpg')) {
-      imageUrls.push(`${directoryPath}/${file}`);
-    }
-  });
+for (let i = 0; i < imageUrls.length; i++) {
+  const start = performance.now();
+  await run(imageUrls[i]);  // Assuming run function is already defined to handle the image URL
+  const duration = performance.now() - start;
+  console.log(`Image-${i} inference time:`, duration);
+}
 
-  const totalTimerStart = performance.now();
-  for (let i = 0; i < imageUrls.length; i++) {
-    const start = performance.now();
-    run(imageUrls[i]);
-    const duration = performance.now() - start;
-    console.log(`Image-${i} inference time:`, duration);
-  }
-  const totalDuration = performance.now() - totalTimerStart;
-  console.log('Total inference time:', totalDuration);
-});
+const totalDuration = performance.now() - totalTimerStart;
+console.log('Total inference time:', totalDuration);
