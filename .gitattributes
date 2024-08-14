@@ -1,9 +1,2 @@
-data/models/YOLOv8.onnx filter=lfs diff=lfs merge=lfs -text
 data/models/opt-squeeze.onnx filter=lfs diff=lfs merge=lfs -text
 data/models/single_relu.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/yolov5s-simplified.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/yolov8n-11.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/yolov8n-18.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/YOLOv5.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/yolov8n.onnx filter=lfs diff=lfs merge=lfs -text
-data/models/YOLOv8-simplified.onnx filter=lfs diff=lfs merge=lfs -text
